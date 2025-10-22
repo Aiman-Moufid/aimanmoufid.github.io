@@ -1,0 +1,128 @@
+<head>
+    <title>Aiman Moufid's Page</title>
+    
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+          
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" 
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" 
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+<script>
+    function submitform()
+    {
+        var uname = document.getElementById("username").value;
+        var pword = document.getElementById("password").value;
+        var pass = false;
+        for(var i=0; i<pword.length; i++)
+        {
+            
+            if(pword.charAt(i) =="!" || pword.charAt(i) =="?")
+            {
+                pass = true;
+                break;
+            }
+
+        }
+        if (pass == false)
+        {
+            window.alert("Password must contain at least one special character (! or ?)");
+        }
+        else
+        {
+            window.alert("Form submitted successfully!\nUsername: " + uname + "\nPassword: " + pword);
+        }
+    }
+</script>
+</head>
+
+
+<body>
+    <div class="p-1 mb-1 bg-body-tertiary rounded-3">
+        <div class="container-fluid py-1">
+          <h1 style="text-align: center;" class="display-3 fw-bold">Aiman Moufid Lab 5</h1>
+          <p style="text-align: center;">B U T T O N </p>
+        </div>
+      </div>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Navbartholomew</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a class="nav-link" href="index.html">Home</a>
+                    <a class="nav-link" href="Stuff.html">Stuff</a>
+                    <a class="nav-link" href="Lab4.html">Lab 4</a>
+                    <a class="nav-link active" aria-current="page" href="Lab5.html">Lab 5</a>
+                    <a class="nav-link" href="and_things.html">And Things</a>
+
+                </div>
+            </div>
+        </div>
+    </nav>
+    <form id="theform">
+        username: <input type="text" id="username" name="username"><br>
+        password: <input type="password" id="password" name="password"><br>
+    </form>
+    <button type="button" onclick="submitform()">Submit</button>
+    <a href="https://www.youtube.com/watch?v=fC7oUOUEEi4">
+        <img src="images/button.jpeg" alt = "you">
+    </a>
+    <script>
+        function submitform()
+        {
+            var uname = document.getElementById("username").value;
+            var pword = document.getElementById("password").value;
+            var pass = false;
+            for(var i=0; i<pword.length; i++)
+            {
+                
+                if(pword.charAt(i) =="!" || pword.charAt(i) =="?")
+                {
+                    pass = true;
+                    break;
+                }
+    
+            }
+            if (pass == false)
+            {
+                window.alert("Password must contain at least one special character (! or ?)");
+            }
+            else
+            {
+                window.alert("Form submitted successfully!\nUsername: " + uname + "\nPassword: " + pword);
+            }
+        }
+    </script><script>
+    function submitform()
+    {
+        var uname = document.getElementById("username").value;
+        var pword = document.getElementById("password").value;
+        var pass = false;
+        for(var i=0; i<pword.length; i++)
+        {
+            
+            if(pword.charAt(i) =="!" || pword.charAt(i) =="?")
+            {
+                pass = true;
+                break;
+            }
+
+        }
+        if (pass == false)
+        {
+            window.alert("Password must contain at least one special character (! or ?)");
+        }
+        else
+        {
+            window.alert("Form submitted successfully!\nUsername: " + uname + "\nPassword: " + pword);
+        }
+    }
+</script>
+
+
+</body>
