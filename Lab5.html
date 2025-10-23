@@ -10,32 +10,7 @@
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" 
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-<script>
-    function submitform()
-    {
-        var uname = document.getElementById("username").value;
-        var pword = document.getElementById("password").value;
-        var pass = false;
-        for(var i=0; i<pword.length; i++)
-        {
-            
-            if(pword.charAt(i) =="!" || pword.charAt(i) =="?")
-            {
-                pass = true;
-                break;
-            }
 
-        }
-        if (pass == false)
-        {
-            window.alert("Password must contain at least one special character (! or ?)");
-        }
-        else
-        {
-            window.alert("Form submitted successfully!\nUsername: " + uname + "\nPassword: " + pword);
-        }
-    }
-</script>
 </head>
 
 
@@ -72,6 +47,8 @@
     <a href="https://www.youtube.com/watch?v=fC7oUOUEEi4">
         <img src="images/button.jpeg" alt = "you">
     </a>
+    <br>
+    <p id="result"></p>
     <script>
         function submitform()
         {
@@ -95,6 +72,7 @@
             else
             {
                 window.alert("Form submitted successfully!\nUsername: " + uname + "\nPassword: " + pword);
+                
             }
         }
     </script><script>
@@ -102,6 +80,10 @@
     {
         var uname = document.getElementById("username").value;
         var pword = document.getElementById("password").value;
+        let userinfo = {
+            username: uname,
+            password: pword
+        }
         var pass = false;
         for(var i=0; i<pword.length; i++)
         {
@@ -120,6 +102,7 @@
         else
         {
             window.alert("Form submitted successfully!\nUsername: " + uname + "\nPassword: " + pword);
+            document.getElementById("result").innerHTML = "Submitted Info:<br>Username: " + userinfo.username + "<br>Password: " + userinfo.password + "<br>You should push the big red button anyway.";
         }
     }
 </script>
