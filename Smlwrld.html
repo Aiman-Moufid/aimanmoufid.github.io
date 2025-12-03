@@ -106,7 +106,7 @@ let savedCards = {};
         for (let i = 0; i < myObj.data.length; i++) 
         {
             const cardtype = myObj.data[i].type;
-            if (cardtype === "Synchro Monster" || cardtype === "Xyz Monster" || cardtype === "Link Monster" || cardtype === "Fusion Monster" || !cardtype) 
+            if (cardtype === "Synchro Monster" || cardtype === "Synchro Tuner Monster" || cardtype==="Synchro Pendulum Effect Monster" || cardtype === "XYZ Monster" || cardtype === "XYZ Pendulum Effect Monster"|| cardtype === "Link Monster" || cardtype === "Fusion Monster" ||cardtype === "Fusion Tuner Monster"||cardtype === "Pendulum Effect Fusion Monster"|| !cardtype) 
             {
                 continue;
             } 
