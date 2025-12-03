@@ -1,0 +1,263 @@
+<html>
+    <head>
+        <title>Small World Finder</title>
+        
+            <!-- Required meta tags -->
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+              
+            <!-- Bootstrap CSS -->
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" 
+            integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" 
+            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+            <style>
+                body{
+                    background-color: #5b6977
+                }
+            </style>
+    </head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">*</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a class="nav-link active" aria-current="page" href="home.html">Home</a>
+                    <a class="nav-link" href="metaltron.html">Metaltronus Finder</a>
+                    <a class="nav-link" aria-current="page" href="Smlwrld.html">Small World Finder</a>
+                    <a class="nav-link " href="SEC.html">Simultaneous Equation Cannon Solver</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="container mt-3 ">
+        <div class="row align -items-center">
+            <div class="col-md-4">
+                <img src="images/small world.jpg" class="img-fluid" alt="Small World">
+            </div>
+            <div class="col-md-8">
+                <h2 class="text-light">Small World Finder</h2>
+                <p class="text-light">Resolve Small World by picking your card in hand and your desired search target.</p>
+                <ul>
+                    <li class="text-light">This card works by revealing one card in your hand, one card from your deck, banishing those two to search any monster from your deck.</li>
+                    <li class="text-light">Properties of the card in your hand must have EXACTLY ONE thing in common(Level, Attribute, Type, Attack, Defense) to the card revealed in deck.</li>
+                    <li class="text-light">Then the card you revealed in deck(your "bridge") must have EXACTLY ONE thing in common to your desired search target.</li>
+                    <li class="text-light">Then you can proceed to banish the two revealed cards and add the search target.</li>
+                </ul>
+                <br>
+            </div>
+        </div>
+    </div>
+    <div class="container mt-3 ">
+        <div class="row align-items-center">
+            <div class="col-md-5">
+                <p class="text-light">Card in hand:</p>
+                <input  type="text" id="input1" name="hfsize" ><br>
+                <button type="Button" onclick="search(1)">Search For Card</button>
+                 <div id = "displaylist1"></div>
+            </div>
+            <div class="col-md-5">
+                <p class="text-light">Search Target:</p>
+                <input  type="text" id="input2" name="hfsize" ><br>
+                <button type="Button" onclick="search(2)">Search For Card</button>
+                <div id = "displaylist2"></div>
+            </div>
+            
+            <div class="col-md-2 text-center">
+                <br>
+                <button type="button" id = "activeornah" onclick="searchbridges()" >Find Possible Bridges</button>
+            </div>
+        </div>
+    </div>
+<div id="output" class = "container"></div>
+    
+</body>
+<script>
+    function delay(ms)
+    {
+    return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    
+
+    async function search(n) 
+    {
+
+            const searchedinput = document.getElementById("input" + n).value;
+            const listing = document.getElementById("displaylist" + n);
+            listing.innerHTML = "";
+            getData(searchedinput, n);
+            await delay(200);
+    }
+
+let savedCards = {};
+    async function getData(searchedinput, listnumber) {
+        const url = 'https://db.ygoprodeck.com/api/v7/cardinfo.php?fname=' + searchedinput;
+        const options = { method: 'GET' };
+        const response = await fetch(url, options);
+        const result = await response.text();
+        const myObj = JSON.parse(result);
+        const listing = document.getElementById("displaylist" + listnumber);
+        let cardfound = false;
+        for (let i = 0; i < myObj.data.length; i++) 
+        {
+            const cardtype = myObj.data[i].type;
+            if (cardtype === "Synchro Monster" || cardtype === "Xyz Monster" || cardtype === "Link Monster" || cardtype === "Fusion Monster" || !cardtype) 
+            {
+                continue;
+            } 
+            else 
+            {
+                savedCards[listnumber] = myObj.data[i];
+                listing.innerHTML = '<img src="' + myObj.data[i].card_images[0].image_url + '" alt="' + myObj.data[i].name + '" width="200">';
+                cardfound = true;
+                break;
+            }
+        }
+        if (!cardfound) 
+        {
+            listing.innerHTML = '<p class="text-light">No valid monster card found.</p>';
+            savedCards[listnumber] = null;
+        }
+    }
+    async function searchbridges() {
+        const cardInHand = savedCards[1];
+        const searchTarget = savedCards[2];
+        if (!cardInHand || !searchTarget) {
+            alert("Please ensure both cards are selected before finding bridges.");
+            return;
+        }
+
+        const listing = document.getElementById("output");
+        listing.innerHTML = ""; 
+
+        
+        const attributeResult = await findBridgesattribute(cardInHand, searchTarget);
+        await delay(200);
+        const typeResult = await findBridgestype(cardInHand, searchTarget);
+        await delay(200);
+        const levelResult = await findBridgeslevel(cardInHand, searchTarget);
+        await delay(200);
+        const attackResult = await findBridgesattack(cardInHand, searchTarget);
+        await delay(200);
+        const defenseResult = await findBridgesdefense(cardInHand, searchTarget);
+        await delay(200);
+
+        
+        if (!attributeResult && !typeResult && !levelResult && !attackResult && !defenseResult) {
+            listing.innerHTML = '<p class="text-light">No valid bridge cards found.</p>';
+        }
+    }
+
+    async function findBridgesattribute(cardInHand, searchTarget)
+    {
+        const url = 'https://db.ygoprodeck.com/api/v7/cardinfo.php?attribute=' + cardInHand.attribute;
+        const options = { method: 'GET' };
+        const response = await fetch(url, options);
+        const result = await response.text();
+        const myObj = JSON.parse(result);
+        const listing = document.getElementById("output");
+        let cardfound = false;
+        cardfound = similarityCheck(cardInHand, searchTarget,listing,myObj);
+        return cardfound;
+    }
+    async function findBridgestype(cardInHand, searchTarget)
+    {
+        const url = 'https://db.ygoprodeck.com/api/v7/cardinfo.php?race=' + cardInHand.race;
+        const options = { method: 'GET' };
+        const response = await fetch(url, options);
+        const result = await response.text();
+        const myObj = JSON.parse(result);
+        const listing = document.getElementById("output");
+        let cardfound = false;
+        cardfound = similarityCheck(cardInHand, searchTarget,listing,myObj);
+        return cardfound;
+    }
+    async function findBridgeslevel(cardInHand, searchTarget)
+    {
+        const url = 'https://db.ygoprodeck.com/api/v7/cardinfo.php?level=' + cardInHand.level;
+        const options = { method: 'GET' };
+        const response = await fetch(url, options);
+        const result = await response.text();
+        const myObj = JSON.parse(result);
+        const listing = document.getElementById("output");
+        let cardfound = false;
+        cardfound = similarityCheck(cardInHand, searchTarget,listing,myObj);
+        return cardfound;
+    }
+    async function findBridgesattack(cardInHand, searchTarget)
+    {
+        const url = 'https://db.ygoprodeck.com/api/v7/cardinfo.php?atk=' + cardInHand.atk;
+        const options = { method: 'GET' };
+        const response = await fetch(url, options);
+        const result = await response.text();
+        const myObj = JSON.parse(result);
+        const listing = document.getElementById("output");
+        let cardfound = false;
+        cardfound = similarityCheck(cardInHand, searchTarget,listing,myObj);
+        return cardfound;
+    }
+    async function findBridgesdefense(cardInHand, searchTarget)
+    {
+        const url = 'https://db.ygoprodeck.com/api/v7/cardinfo.php?def=' + cardInHand.def;
+        const options = { method: 'GET' };
+        const response = await fetch(url, options);
+        const result = await response.text();
+        const myObj = JSON.parse(result);
+        const listing = document.getElementById("output");
+        let cardfound = false;
+        cardfound = similarityCheck(cardInHand, searchTarget,listing,myObj);
+        return cardfound;
+    }
+    async function similarityCheck(cardInHand, searchTarget,listing,myObj) 
+    {
+        let cardfound = false;
+        
+        for (let i = 0; i < myObj.data.length; i++) 
+        {
+            const cardtype = myObj.data[i].type;
+            if (cardtype === "Synchro Monster" || cardtype === "Synchro Tuner Monster" || cardtype==="Synchro Pendulum Effect Monster" || cardtype === "XYZ Monster" || cardtype === "XYZ Pendulum Effect Monster"|| cardtype === "Link Monster" || cardtype === "Fusion Monster" ||cardtype === "Fusion Tuner Monster"||cardtype === "Pendulum Effect Fusion Monster"|| !cardtype) 
+            {
+                continue;
+            }   
+            let matchcounttarget = 0;
+            if (myObj.data[i].attribute === searchTarget.attribute) matchcounttarget++;
+            if (myObj.data[i].type === searchTarget.type) matchcounttarget++;
+            if (myObj.data[i].level === searchTarget.level) matchcounttarget++;
+            if (myObj.data[i].atk === searchTarget.atk) matchcounttarget++;
+            if (myObj.data[i].def === searchTarget.def) matchcounttarget++;
+            let matchcounthand = 0;
+            if (myObj.data[i].attribute === cardInHand.attribute) matchcounthand++;
+            if (myObj.data[i].type === cardInHand.type) matchcounthand++;
+            if (myObj.data[i].level === cardInHand.level) matchcounthand++;
+            if (myObj.data[i].atk === cardInHand.atk) matchcounthand++;
+            if (myObj.data[i].def === cardInHand.def) matchcounthand++;
+            if (matchcounttarget !== 1 || matchcounthand !== 1) 
+            {
+                continue;
+            }
+
+            else 
+            {
+                await delay(51);
+                listing.innerHTML += '<img src="' + myObj.data[i].card_images[0].image_url + '" alt="' + myObj.data[i].name + '" width="200">';
+                cardfound = true;
+            }
+        }
+        if (!cardfound) 
+        {
+            return false
+        }
+        else
+        {
+            return true
+        }
+        
+    }
+
+</script>
+</html>
