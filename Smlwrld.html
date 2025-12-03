@@ -226,13 +226,13 @@ let savedCards = {};
             }   
             let matchcounttarget = 0;
             if (myObj.data[i].attribute === searchTarget.attribute) matchcounttarget++;
-            if (myObj.data[i].type === searchTarget.type) matchcounttarget++;
+            if (myObj.data[i].race === searchTarget.race) matchcounttarget++;
             if (myObj.data[i].level === searchTarget.level) matchcounttarget++;
             if (myObj.data[i].atk === searchTarget.atk) matchcounttarget++;
             if (myObj.data[i].def === searchTarget.def) matchcounttarget++;
             let matchcounthand = 0;
             if (myObj.data[i].attribute === cardInHand.attribute) matchcounthand++;
-            if (myObj.data[i].type === cardInHand.type) matchcounthand++;
+            if (myObj.data[i].race === cardInHand.race) matchcounthand++;
             if (myObj.data[i].level === cardInHand.level) matchcounthand++;
             if (myObj.data[i].atk === cardInHand.atk) matchcounthand++;
             if (myObj.data[i].def === cardInHand.def) matchcounthand++;
