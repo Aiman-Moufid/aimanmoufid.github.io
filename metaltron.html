@@ -102,7 +102,7 @@ let savedCards = {};
         for (let i = 0; i < myObj.data.length; i++) 
         {
             const cardtype = myObj.data[i].type;
-            if (!cardtype) 
+            if (cardtype === "Trap Card"||cardtype === "Spell Card"|| !cardtype) 
             {
                 continue;
             } 
