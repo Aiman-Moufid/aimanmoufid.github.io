@@ -1,0 +1,179 @@
+<html>
+    <head>
+        <title>Simultaneous Equation Cannon</title>
+        
+            <!-- Required meta tags -->
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+              
+            <!-- Bootstrap CSS -->
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" 
+            integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" 
+            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+            <style>
+                body
+                {
+                    background-color: #5b6977
+                }
+            </style>
+    </head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">*</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a class="nav-link active" href="home.html">Home</a>
+                    <a class="nav-link" href="metaltron.html">Metaltronus Finder</a>
+                    <a class="nav-link" href="Smlwrld.html">Small World Finder</a>
+                    <a class="nav-link" aria-current="page" href="SEC.html">Simultaneous Equation Cannon Solver</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    .
+    <div class="container mt-3 ">
+        <div class="row align -items-center">
+            <div class="col-md-4">
+                <img src="images/Simultaneous.jpg" class="img-fluid" alt="Simultaneous Equation Cannon">
+            </div>
+            <div class="col-md-8">
+                <h2 class="text-light">Simultaneous Equation Cannon Solver</h2>
+                <p class="text-light">Resolve Simultaneous Equation Cannon by filling out what you know from the given gamestate.</p>
+                <ul>
+                     <li class="text-light">Hand & Field Only: Inputting the Hand and Field Size of both players will return all possible levels your opponent must control to successfully resolve the card. </li>
+                     <li class="text-light">Level Only: Inputting only the level of a card your opponent controls will return all possible Hand+Field values to successfully resolve the card. </li>
+                     <li class="text-light">Hand & Field + Level: Inputting both will return the full equation for a successful resolution, if no solution is found then Simultaneous Equation Cannon cannot resolve in this gamestate.</li>
+                </ul>
+                <br>
+                <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked onchange="setOption(1)">
+                    <label class="btn btn-outline-primary text-light" for="btnradio1">Hand+Field</label>
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" onchange="setOption(2)">
+                    <label class="btn btn-outline-primary text-light" for="btnradio2">Level</label>
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off" onchange="setOption(3)">
+                    <label class="btn btn-outline-primary text-light" for="btnradio3">Both</label>
+                </div>
+                <form id="theform">
+                   <label class="text-light"> Hand + Field Size of both Players:</label><input  type="text" id="hfsize" name="hfsize"><br>
+                </form>
+                <button type="button" onclick="calculate()">Resolve</button>
+            </div>
+        </div>
+    </div>
+    <div id = "output"></div>
+</body>
+
+<script>
+function setOption(option)
+{
+    let form = document.getElementById("theform");
+
+    if (option === 1) {
+        form.innerHTML = `<label class="text-light"> Hand + Field Size of both Players:</label> <input  type="text" id="hfsize" name="hfsize"><br>`;
+    }
+    else if (option === 2) {
+        form.innerHTML = `<label class="text-light"l>Level of opponents Monster:</label> <input  type="text" id="levelopp" name="levelopp"><br>`;
+    }
+    else if (option === 3) {
+        form.innerHTML = `<label class="text-light"> Hand + Field Size of both Players:</label> <input  type="text" id="hfsize" name="hfsize"><br>
+        <label class="text-light"l>Level of opponents Monster:</label><input  type="text" id="levelopp" name="levelopp"><br>`;
+    }
+}
+
+function clearOutput() 
+{
+    document.getElementById("output").innerHTML = "";
+}
+
+function printResult(size, rank, level, tgt) 
+{
+    var out = document.getElementById("output");
+    out.innerHTML += 
+        "<p>" +
+        "Hand+Board Size: " + size + "<br>" +
+        "XYZ Rank: " + rank + "<br>" +
+        "Fusion Level: " + level + "<br>" +
+        "Opponent Level: " + tgt + "<br><br>" +
+        "</p>";
+}
+
+function calculate() 
+{
+    let form = document.getElementById("theform");
+    let mode;
+    let size = 0;
+    let tgt = 0;
+
+    if (form.innerHTML.includes("hfsize") && form.innerHTML.includes("levelopp")) {
+        mode = 3;
+        size = parseInt(document.getElementById("hfsize").value);
+        tgt = parseInt(document.getElementById("levelopp").value);
+    }
+    else if (form.innerHTML.includes("hfsize")) {
+        mode = 1;
+        size = parseInt(document.getElementById("hfsize").value);
+    }
+    else if (form.innerHTML.includes("levelopp")) {
+        mode = 2;
+        tgt = parseInt(document.getElementById("levelopp").value);
+    }
+
+    calculatepart(mode, size, tgt);
+}
+
+function calculatepart(mode, size, tgt) 
+{
+    if (isNaN(size) || isNaN(tgt)) 
+    {
+        alert("Please enter valid numbers.");
+        return;
+    }
+    clearOutput();
+    var found = false;
+
+    for (var rank = 1; rank < 13; rank++) {
+        for (var level = 1; level < 13; level++) {
+
+            if (mode === 1) {
+                for (var t = 1; t < 13; t++) {
+                    if (resolveEquation(rank, level, size, t)) {
+                        printResult(size, rank, level, t);
+                        found = true;
+                    }
+                }
+            }
+
+            else if (mode === 2) {
+                for (var s = 1; s < 51; s++) {
+                    if (resolveEquation(rank, level, s, tgt)) {
+                        printResult(s, rank, level, tgt);
+                        found = true;
+                    }
+                }
+            }
+
+            else if (mode === 3) {
+                if (resolveEquation(rank, level, size, tgt)) {
+                    printResult(size, rank, level, tgt);
+                    found = true;
+                }
+            }
+        }
+    }
+
+    if (!found) {
+        document.getElementById("output").innerHTML = "No solutions.";
+    }
+}
+
+function resolveEquation(rank, level, size, tgt) 
+{
+    return (2 * rank + level === size) && (rank + level === tgt);
+}
+                
+</script>
