@@ -34,3 +34,157 @@
             </div>
         </div>
     </nav>
+    <div class="container mt-3 ">
+        <div class="row align -items-center">
+            <div class="col-md-4">
+                <img src="images/metaltronus.jpg" class="img-fluid" alt="Metaltronus">
+            </div>
+            <div class="col-md-8">
+                <h2 class="text-light">Metaltronus Finder</h2>
+                <p class="text-light">Resolve Metaltronus by picking the target on field.</p>
+                <ul>
+                    <li class="text-light">This card works by targetting a face up monster your opponent controls.</li>
+                    <li class="text-light">You can then opt to summon any monster from your Deck or Extra Deck to negate the targets effect.</li>
+                    <li class="text-light">The card MUST share at least two things in common(Attribute, Type, and/or Attack) for the card to resolve successfully</li>
+                    <li class="text-light">Here you are able to filter what commonality you want with the given buttons once a card is selected.</li>
+                </ul>
+                <br>
+                <p class="text-light">Target on Field</p>
+                <div class="container align-items-center d-flex justify-content-around" > 
+                    <input  type="text" id="input1" name="hfsize" >
+                    <button type="Button" onclick="search(1)">Search For Card</button>
+                    <div id = "displaylist1"></div>
+                </div> 
+                <br>
+                <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" onchange="resolveMetaltronus(1)">
+                    <label class="btn btn-outline-primary text-light" for="btnradio1">Attribute+Type</label>
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" onchange="resolveMetaltronus(2)">
+                    <label class="btn btn-outline-primary text-light" for="btnradio2">Attribute+Attack</label>
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off" onchange="resolveMetaltronus(3)">
+                    <label class="btn btn-outline-primary text-light" for="btnradio3">Type+Attack</label>
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio4" autocomplete="off" onchange="resolveMetaltronus(4)">
+                    <label class="btn btn-outline-primary text-light" for="btnradio4">All 3</label>
+                </div>
+            </div>
+        </div>
+    </div>
+<div id="output" class = "container"></div>
+
+</body>
+<script>
+    function delay(ms)
+    {
+    return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    
+
+    async function search(n) 
+    {
+
+            const searchedinput = document.getElementById("input" + n).value;
+            const listing = document.getElementById("displaylist" + n);
+            listing.innerHTML = "";
+            getData(searchedinput, n);
+            await delay(200);
+    }
+
+let savedCards = {};
+    async function getData(searchedinput, listnumber) {
+        const url = 'https://db.ygoprodeck.com/api/v7/cardinfo.php?fname=' + searchedinput;
+        const options = { method: 'GET' };
+        const response = await fetch(url, options);
+        const result = await response.text();
+        const myObj = JSON.parse(result);
+        const listing = document.getElementById("displaylist" + listnumber);
+        let cardfound = false;
+        for (let i = 0; i < myObj.data.length; i++) 
+        {
+            const cardtype = myObj.data[i].type;
+            if (!cardtype) 
+            {
+                continue;
+            } 
+            else 
+            {
+                savedCards[listnumber] = myObj.data[i];
+                listing.innerHTML = '<img src="' + myObj.data[i].card_images[0].image_url + '" alt="' + myObj.data[i].name + '" width="200">';
+                cardfound = true;
+                break;
+            }
+        }
+        if (!cardfound) 
+        {
+            listing.innerHTML = '<p class="text-light">No valid monster card found.</p>';
+            savedCards[listnumber] = null;
+        }
+    }
+   
+    async function resolveMetaltronus(n)
+    {
+        document.getElementById("output").innerHTML = "";
+        if(n === 1)
+        {
+        const url = 'https://db.ygoprodeck.com/api/v7/cardinfo.php?attribute=' + savedCards[1].attribute + '&race=' + savedCards[1].race;
+        const options = { method: 'GET' };
+        const response = await fetch(url, options);
+        const result = await response.text();
+        const myObj = JSON.parse(result);
+        let listing = document.getElementById("output");
+        for (let i = 0; i < myObj.data.length; i++) 
+        {
+            const cardtype = myObj.data[i].type;
+            await delay(51);
+            listing.innerHTML+= '<img src="' + myObj.data[i].card_images[0].image_url + '" alt="' + myObj.data[i].name + '" width="200">';
+        }
+        }
+        if(n === 2)
+        {
+        const url = 'https://db.ygoprodeck.com/api/v7/cardinfo.php?attribute=' + savedCards[1].attribute + '&atk=' + savedCards[1].atk;
+        const options = { method: 'GET' };
+        const response = await fetch(url, options);
+        const result = await response.text();
+        const myObj = JSON.parse(result);
+        let listing = document.getElementById("output");
+        for (let i = 0; i < myObj.data.length; i++) 
+        {
+            const cardtype = myObj.data[i].type;
+            await delay(51);
+            listing.innerHTML+= '<img src="' + myObj.data[i].card_images[0].image_url + '" alt="' + myObj.data[i].name + '" width="200">';
+        }
+        }
+        if(n === 3)
+        {
+        const url = 'https://db.ygoprodeck.com/api/v7/cardinfo.php?race=' + savedCards[1].race + '&atk=' + savedCards[1].atk;
+        const options = { method: 'GET' };
+        const response = await fetch(url, options);
+        const result = await response.text();
+        const myObj = JSON.parse(result);
+        let listing = document.getElementById("output");
+        for (let i = 0; i < myObj.data.length; i++) 
+        {
+            const cardtype = myObj.data[i].type;
+            await delay(51);
+            listing.innerHTML+= '<img src="' + myObj.data[i].card_images[0].image_url + '" alt="' + myObj.data[i].name + '" width="200">';
+        }
+        }
+        if(n === 4)
+        {
+        const url = 'https://db.ygoprodeck.com/api/v7/cardinfo.php?attribute=' + savedCards[1].attribute + '&race=' + savedCards[1].race+ '&atk=' + savedCards[1].atk;
+        const options = { method: 'GET' };
+        const response = await fetch(url, options);
+        const result = await response.text();
+        const myObj = JSON.parse(result);
+        let listing = document.getElementById("output");
+        for (let i = 0; i < myObj.data.length; i++) 
+        {
+            const cardtype = myObj.data[i].type;
+            await delay(51);
+            listing.innerHTML+= '<img src="' + myObj.data[i].card_images[0].image_url + '" alt="' + myObj.data[i].name + '" width="200">';
+        }
+        }
+    }
+    
+</script>
+</html>
