@@ -101,7 +101,7 @@
 
 let savedCards = {};
     async function getData(searchedinput, listnumber) {
-        const url = 'https://db.ygoprodeck.com/api/v7/cardinfo.php?fname=' + searchedinput;
+        const url = 'https://db.ygoprodeck.com/api/v7/cardinfo.php?name=' + searchedinput;
         const options = { method: 'GET' };
         const response = await fetch(url, options);
         const result = await response.text();
