@@ -1,7 +1,7 @@
 <html>
     <!--Implement live search, learn event listeners maybe, rewrite the card search logic, then -->
     <head>
-        <title>Small World Finder</title>
+        <title>Sample</title>
         
             <!-- Required meta tags -->
             <meta charset="utf-8">
@@ -12,39 +12,312 @@
             integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" 
             integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+            
+            <!-- GSAP and ScrollTrigger -->
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
             <style>
                 body{
-                    background-color: #5a636d
+                    background-color: rgb(60, 134, 60);
                 }
+                .navbar-brand img {
+                         height: 40px;
+                         width: auto;
+                        margin-right: 10px;
+                }
+                .my-text
+                {
+                    color:antiquewhite;
+                    font-family:'Helvetica Neue','Roboto','Cinzel','Times New Roman', Times, serif;   
+                }
+                .carousel-item {
+                    height: 400px;
+                }
+
+                .carousel-item img {
+                    height: 100%;
+                    object-fit: cover;
+                }
+                .text-box{
+                    background-color: rgba(40,40,40,0.65);
+                    backdrop-filter: blur(6px);
+                    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+                }
+                .justshadow{
+                    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+                }
+                .slide-in-left {
+                    opacity: 0;
+                    transform: translateX(-100px);
+                }
+                .slide-in-right {
+                    opacity: 0;
+                    transform: translateX(100px);
+                }
+                .slide-in-up {
+                    opacity: 0;
+                    transform: translateY(100px);
+                } 
+                .social-icon {
+                    width: 40px;
+                    height: 40px;
+                    transition: transform 0.3s ease;
+                }
+                .social-icon:hover {
+                    transform: scale(1.2);
+                }
+                .socials-container {
+                    display: flex;
+                    gap: 20px;
+                    margin-top: 20px;
+                }
+                
             </style>
     </head>
 <body>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">*</a>
+            <a class="navbar-brand" href="sample.html">
+                <img src="Placeholder.png" alt="Brand Logo" height="40" class="d-inline-block align-text-top">
+            </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-                    <a class="nav-link active" aria-current="page" href="home.html">Home</a>
-                    <a class="nav-link" href="metaltron.html">Page 1</a>
-                    <a class="nav-link" aria-current="page" href="Smlwrld.html">Page 2</a>
-                    <a class="nav-link " href="SEC.html">Page 3</a>
+                    <a class="nav-link active" aria-current="page" href="sample.html">Home</a>
+                    <a class="nav-link" href="shopifyredirect.html">Shopify</a>
+                    <a class="nav-link" href="shopifyredirect.html">Contact Us</a>
                 </div>
             </div>
         </div>
     </nav>
-    <div class="container-fluid md-12">
-        <img src="Placeholder.png" class="img-fluid w-100" alt="Small World Finder" style="height:200px">
-        <img src="Placeholder.png" class="img-fluid w-100" alt="Small World Finder" style="height:200px">
-        <img src="Placeholder.png" class="img-fluid w-100" alt="Small World Finder" style="height:200px">
+    <div class="banner">
+      <h1 class="my-text">Any Banners would be here, logo + some background image to utilize the space. </h1>
+  </div>
+    <div class="container">
+        <div class="row align-items-center">
+          <div class="col-md-5 text-box rounded p-4 slide-in-left"> 
+            <h1 class="my-text" >About Us</h1>
+            <hr>
+            <p class="my-text">Nnaki's Lounge created in 2023</p>
+            <br>
+            <p class="my-text">Sells high end street wear and luxury garments</p>
+            <a href="shopifyredirect.html">
+                 <button type="button" class="btn btn-light" class="my-text">Shop Now</button>
+            </a>
+        </div>
+          <div class="col-md-7 slide-in-right ">
+            <div id="carouselExampleControls" class="carousel slide justshadow rounded" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                  <div class="carousel-item active" data-bs-interval="5000">
+                    <img src="Placeholder.png" class="d-block w-100" alt="...">
+                  </div>
+                  <div class="carousel-item" data-bs-interval="5000">
+                    <img src="Placeholder.png" class="d-block w-100" alt="...">
+                  </div>
+                  <div class="carousel-item" data-bs-interval="5000">
+                    <img src="Placeholder.png" class="d-block w-100" alt="...">
+                  </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    <!---PRODUCTS-->
+    <div class="container mt-5">
+        <div class="row g-3">
+          <div class="col-6 col-sm-6 col-md-3 col-lg-2 slide-in-up">
+                <div class="card h-100 justshadow">
+                    <img src="Placeholder.png" class="card-img-top" alt="Card 1">
+                    <div class="card-body">
+                        <h5 class="card-title">Product</h5>
+                        <p class="card-text">Product Description</p>
+                        <a href="shopifyredirect.html" class="btn btn-primary">Button</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-6 col-sm-6 col-md-3 col-lg-2 slide-in-up">
+                <div class="card h-100 justshadow">
+                    <img src="Placeholder.png" class="card-img-top" alt="Card 2">
+                    <div class="card-body">
+                        <h5 class="card-title">Product</h5>
+                        <p class="card-text">Product Description</p>
+                        <a href="shopifyredirect.html" class="btn btn-primary">Button</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-6 col-sm-6 col-md-3 col-lg-2 slide-in-up">
+                <div class="card h-100 justshadow">
+                    <img src="Placeholder.png" class="card-img-top" alt="Card 3">
+                    <div class="card-body">
+                        <h5 class="card-title">Product</h5>
+                        <p class="card-text">Product Description</p>
+                        <a href="shopifyredirect.html" class="btn btn-primary">Button</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-6 col-sm-6 col-md-3 col-lg-2 slide-in-up">
+                <div class="card h-100 justshadow">
+                    <img src="Placeholder.png" class="card-img-top" alt="Card 4">
+                    <div class="card-body">
+                        <h5 class="card-title">Product</h5>
+                        <p class="card-text">Product Description</p>
+                        <a href="shopifyredirect.html" class="btn btn-primary">Button</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-6 col-sm-6 col-md-3 col-lg-2 slide-in-up">
+                <div class="card h-100 justshadow">
+                    <img src="Placeholder.png" class="card-img-top" alt="Card 5">
+                    <div class="card-body">
+                        <h5 class="card-title">Product</h5>
+                        <p class="card-text">Product Description</p>
+                        <a href="shopifyredirect.html" class="btn btn-primary">Button</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-6 col-sm-6 col-md-3 col-lg-2 slide-in-up">
+                <div class="card h-100 justshadow">
+                    <img src="Placeholder.png" class="card-img-top" alt="Card 6">
+                    <div class="card-body">
+                        <h5 class="card-title">Product</h5>
+                        <p class="card-text">Product Description</p>
+                        <a href="shopifyredirect.html" class="btn btn-primary">Button</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-6 col-sm-6 col-md-3 col-lg-2 slide-in-up">
+                <div class="card h-100 justshadow">
+                    <img src="Placeholder.png" class="card-img-top" alt="Card 7">
+                    <div class="card-body">
+                        <h5 class="card-title">Product</h5>
+                        <p class="card-text">Product Description</p>
+                        <a href="shopifyredirect.html" class="btn btn-primary">Button</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-6 col-sm-6 col-md-3 col-lg-2 slide-in-up">
+                <div class="card h-100 justshadow">
+                    <img src="Placeholder.png" class="card-img-top" alt="Card 8">
+                    <div class="card-body">
+                        <h5 class="card-title">Product</h5>
+                        <p class="card-text">Product Description</p>
+                        <a href="shopifyredirect.html" class="btn btn-primary">Button</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-6 col-sm-6 col-md-3 col-lg-2 slide-in-up">
+                <div class="card h-100 justshadow">
+                    <img src="Placeholder.png" class="card-img-top" alt="Card 9">
+                    <div class="card-body">
+                        <h5 class="card-title">Product</h5>
+                        <p class="card-text">Product Description</p>
+                        <a href="shopifyredirect.html" class="btn btn-primary">Button</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-6 col-sm-6 col-md-3 col-lg-2 slide-in-up">
+                <div class="card h-100 justshadow">
+                    <img src="Placeholder.png" class="card-img-top" alt="Card 10">
+                    <div class="card-body">
+                        <h5 class="card-title">Product</h5>
+                        <p class="card-text">Product Description</p>
+                        <a href="shopifyredirect.html" class="btn btn-primary">Button</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-6 col-sm-6 col-md-3 col-lg-2 slide-in-up">
+                <div class="card h-100 justshadow">
+                    <img src="Placeholder.png" class="card-img-top" alt="Card 11">
+                    <div class="card-body">
+                        <h5 class="card-title">Product</h5>
+                        <p class="card-text">Product Description</p>
+                        <a href="shopifyredirect.html" class="btn btn-primary">Button</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-6 col-sm-6 col-md-3 col-lg-2 slide-in-up">
+                <div class="card h-100 justshadow">
+                    <img src="Placeholder.png" class="card-img-top" alt="Card 12">
+                    <div class="card-body">
+                        <h5 class="card-title">Product</h5>
+                        <p class="card-text">Product Description</p>
+                        <a href="shopifyredirect.html" class="btn btn-primary">Button</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-<h2 style="text-align: left;" class="text-light">About Title Here</h2>
-<p class="text-light">Stuff here</p>
-<ul>
-    <li class="text-light">Point 1</li>
-    <li class="text-light">Point 2</li>
-    <li class="text-light">Point 3</li>
-</ul>
-    </body>
+            
+   <div class="container mt-5 mb-5">
+        <h2 class="my-text">Follow Us</h2>
+        <hr>
+        <div class="socials-container">
+            <a href="https://www.instagram.com/nnakislounge?igsh=MWozNjNpcGV3c3Q2NA%3D%3D&utm_source=qr" target="_blank" title="Instagram">
+                <img src="instagram.png" alt="Instagram" class="social-icon">
+            </a>
+    
+            <a href="http://ebay.us/m/16QZXm" target="_blank" title="eBay">
+                <img src="ebay.png" alt="eBay" class="social-icon">
+        </div>
+    </div>
+      <script>
+          gsap.registerPlugin(ScrollTrigger);
+
+          gsap.to(".slide-in-left", {
+              scrollTrigger: {
+                  trigger: ".slide-in-left",
+                  start: "top 80%"
+              },
+              opacity: 1,
+              x: 0,
+              duration: 0.8,
+              ease: "power2.out"
+          });
+
+          gsap.to(".slide-in-right", {
+              scrollTrigger: {
+                  trigger: ".slide-in-right",
+                  start: "top 80%"
+              },
+              opacity: 1,
+              x: 0,
+              duration: 0.8,
+              ease: "power2.out"
+          });
+          gsap.to(".slide-in-up", {
+              scrollTrigger: {
+                  trigger: ".slide-in-up",
+                  start: "top 80%"
+            },
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            ease: "power2.out"
+          });
+      </script>
+
+
+</body>
+</html>
